@@ -1,0 +1,12 @@
+.container {
+  margin-top: 40px;
+}
+.card {
+  text-align:center;
+}
+.book-now {
+  margin-top: 8px;
+}
+img {
+  border-radius: 3px;
+}

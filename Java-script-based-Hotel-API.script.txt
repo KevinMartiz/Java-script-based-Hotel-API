@@ -1,0 +1,28 @@
+$(function() {
+  let xhttp = new XMLHttpRequest();
+  const lat = "40.7613";
+  const long = "-73.8323";
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      var response = JSON.parse(xhttp.responseText);
+      var hotels = response.getHotelResultsWithCacheV2.results.hotel_data;
+      var rsf = response.getHotelResultsWithcCacheV2;
+      console.log(typeof rsf)
+      const hotelListingTemplate = document.getElementById("hotel-listing");
+      let keys = [];
+      $.each(hotels, function(val, key, o) {
+        keys.push(key);
+      });
+      for (let i = 0; i < keys.length; i++) {
+        const templateInstance = `<div class="card w-50"><div class="card-body"><div class="row"><div class="col-6"><h5 class="card-title">${keys[i].name}</h5><p class="card-text location">${keys[i].address.city_name + ", " + keys[i].address.state_code}</p><p class="price">$${keys[i].static_low_rate.display_price}</p></div><div class="col-6"><img class="img-fluid" src="${keys[i].thumbnail}" /><a href="#" class="btn btn-secondary book-now">Book Now</a></div></div>`;
+        $(".append-content").append(templateInstance);
+      }
+    }
+  };
+  xhttp.open(
+    "GET",
+    "https://cors-anywhere.herokuapp.com/https://api.rezserver.com/api/hotel/getResultsWithCacheV2?format=json&refid=6241&api_key=6c58214511bf691e97298abae824af88&format=json&latitude=" + lat + "&longitude=" + long + "&radius=15",
+    true
+  );
+  xhttp.send();
+});
